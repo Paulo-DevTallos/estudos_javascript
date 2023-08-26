@@ -8,6 +8,11 @@
  * passam a ocupar o mesmo espaço na memória, então se realizarmos uma 
  * alteração no objeto1 o dois sofrerá alteração e vice e versa.
  * 
+ * Para os exemplos a seguir é importante a leitura e compreensão para verificação
+ * de seus exemplos aplicados aos logs.
+ * 
+ * Em caso de dúvidas abra uma Issue para criar um forum de discussão nesse repo.
+ * 
  */
 
 // atribuindo nome a teste
@@ -17,9 +22,9 @@ let teste = 'Nome';
 let teste1 = teste;
 
 // reatribuindo o Fofolette a teste
-teste = 'Fofolette!';
+teste = 'Outro nome!';
 
-console.log(teste) // Aqui será impresso Fofolette (reatribuição)
+console.log(teste) // Aqui será impresso Outro nome (reatribuição)
 console.log(teste1) // Aqui será impresso Nome
 
 //=====================================================================================================================
@@ -32,7 +37,7 @@ let objeto2 = objeto1;
 // alterando objeto2 para 'Joao'
 objeto2.name = 'João';
 
-// realizando atribuição por referencia nesse caso não ocorre a alteração do objeto original
+// realizando atribuição por cópia, nesse caso não ocorre a alteração do objeto original
 let objeto3 = { name: 'Ferreira' };
 let objeto4 = {...objeto3};
 objeto4.name = 'Luiz';
@@ -44,6 +49,39 @@ console.log(objeto2);
 // cria uma cópia do objeto apontando para lugares direfentes na memória.
 console.log(objeto3);
 console.log(objeto4);
+
+/** Acessar referencia sob nível de profundidade de objetos */
+// utilizar JSON para essa tratativa
+let objeto5 = { item: 'Xicara', caracteristicas: { cor: 'branca', material: 'louça' } };
+let objeto6 = { ...objeto5 };
+objeto6.item = 'Colher'; 
+/**
+ * Ao alterar uma propriedade a partir do primeiro estágio da cópia do objeto 
+ * essa alteração terá efeito da mesma forma como no exemplo do console do "objeto4".
+ **/   
+objeto6.caracteristicas.material = 'Metal';
+/**
+ * Nesse caso ao realizarmos uma alteração em um nível de profundidade dentro do objeto
+ * o essa alteração é replicada para todas as declaração desse mesmo objeto, desde o 
+ * objeto copiado até o original, recebendo assim o novo valor atribuído.
+ **/
+
+let objeto7 = JSON.parse(JSON.stringify(objeto6))
+objeto7.caracteristicas.material = 'Plastico';
+/**
+ * Aplicando o JSON.parser(JSON.stringify(obj)) criamos uma cópia mais profunda do objeto
+ * isso é necessário para garantir que não haja referências compartilhadas entre os objetos 
+ * originais e copiados. Isso significa que as alterações feitas em um objeto não afetarão o 
+ * outro objeto. No entanto essa abordagem tem algumas limitações, como não ser capaz de copiar 
+ * funções, propriedades não-enumeráveis e objetos com referências circulares. Com isso o valor 
+ * atribuído para a alteração realizada em 'objeto7.caracteristicas.material' alterará apenas 
+ * o valor concernente a variável objeto7.
+ * 
+ */
+
+console.log(objeto5);
+console.log(objeto6);
+console.log(objeto7);
 
 //=====================================================================================================================
 // analisando a mesma abordagem para arrays
@@ -81,14 +119,14 @@ console.log(arr3);
 //=====================================================================================================================
 //exemplos com funções
 function testeFn() {
-    console.log('alguma coisa')
+    console.log('alguma coisa');
 };
 
 let fn = testeFn; // essa abordagem significa que estamos passando uma função por referencia, nesse caso ela não é executada"()"
 
 function fn1(fn) {
-    fn()
-}
+    fn();
+};
 
 /**
  * nesse estamos referenciando a função teste como parametro de fn1, caso 
