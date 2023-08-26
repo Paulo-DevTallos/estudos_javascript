@@ -9,7 +9,9 @@
  * alteração no objeto1 o dois sofrerá alteração e vice e versa.
  * 
  * Para os exemplos a seguir é importante a leitura e compreensão para verificação
- * de seus exemplos aplicados aos logs.
+ * de seus exemplos aplicados aos logs. Recomendo que ao estudar esse tópico procure
+ * práticar com seu próprio entendimento de forma a ter melhor proveito na absorção
+ * do aprendizado.
  * 
  * Em caso de dúvidas abra uma Issue para criar um forum de discussão nesse repo.
  * 
@@ -101,12 +103,33 @@ arr3 = [...arr2];
 
 arr3[1] = 'Jon Snow';
 
+/**
+ * Para esse caso simulamos uma ocorrência semelhante a tratada com os objetos. Nesse caso precisamos realizar 
+ * uma alteração um nível a mais em nosso array. Para isso criamos uma cópia atribuído a variável 'arr5' e 
+ * analisamos alguns comportamentos.
+ * 
+ */
+let arr4 = [1, 2, 3, [4, 5]];
+let arr5 = [...arr4];
+arr5[3].push(6) 
+/**
+ * ao adicionar o '6' para a cópia atribuída ao arr5 no indice [3] observamos que seu valor e replicado para o array
+ * original, da mesma forma como ocorre com o objeto. Para realizar a alteração sem mutar o array original utilizamos
+ * a mesma abordagem de parsear o seu valor de forma que consigamos acessar apenas o valor um nível a dentro do array
+ * alterando apenas os dados atribuídos àquela estrutura.
+ */
+let arr6 = JSON.parse(JSON.stringify(arr5))
+arr6[3].push(7);
+
 // nesse caso o valor dos dois arrays são alterados, pois assim como no objeto os valores são transmitidos por ref.
 console.log(myArray);
 console.log(arr1);
 // criada uma copia do array apontando para lugares diferentes na memoria
 console.log(arr2);
 console.log(arr3);
+console.log(arr4);
+console.log(arr5);
+console.log(arr6);
 
 /**
  * Essas abordagens são bastante utilizadas quando precisamos alterar valores de variaveis
