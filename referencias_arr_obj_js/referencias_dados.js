@@ -23,7 +23,7 @@ let teste = 'Nome';
 // atribuindo teste a teste1
 let teste1 = teste;
 
-// reatribuindo o Fofolette a teste
+// reatribuindo o Outro nome a teste
 teste = 'Outro nome!';
 
 console.log(teste) // Aqui será impresso Outro nome (reatribuição)
